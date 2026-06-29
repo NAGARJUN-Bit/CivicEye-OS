@@ -1,0 +1,391 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+/* ─── Design Tokens ──────────────────────────────────────────────────── */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  /* Radius */
+  --radius-card:  14px;
+  --radius-inner: 10px;
+  --radius-pill:   8px;
+  --radius-badge:  6px;
+
+  /* Surfaces */
+  --surface-0: #020617;          /* slate-950 — page bg       */
+  --surface-1: #0c1628;          /* slightly blue-dark cards  */
+  --surface-2: #111827;          /* elevated cards            */
+  --surface-3: rgba(255,255,255,0.03); /* highest-surface overlay */
+
+  /* Borders */
+  --border-subtle:  rgba(255,255,255,0.055);
+  --border-muted:   rgba(255,255,255,0.09);
+  --border-visible: rgba(255,255,255,0.13);
+
+  /* Accent palette — softer, less neon */
+  --accent-emerald:   #34d399;
+  --accent-emerald-bg: rgba(52,211,153,0.08);
+  --accent-emerald-border: rgba(52,211,153,0.18);
+  --accent-amber:     #fbbf24;
+  --accent-amber-bg:  rgba(251,191,36,0.08);
+  --accent-amber-border: rgba(251,191,36,0.20);
+  --accent-sky:       #38bdf8;
+  --accent-sky-bg:    rgba(56,189,248,0.08);
+  --accent-sky-border: rgba(56,189,248,0.18);
+  --accent-indigo:    #818cf8;
+  --accent-indigo-bg: rgba(129,140,248,0.08);
+  --accent-indigo-border: rgba(129,140,248,0.18);
+  --accent-violet:    #a78bfa;
+  --accent-violet-bg: rgba(167,139,250,0.08);
+  --accent-violet-border: rgba(167,139,250,0.18);
+  --accent-red:       #f87171;
+  --accent-red-bg:    rgba(248,113,113,0.08);
+
+  /* Shadow system — 3 elevation levels */
+  --shadow-1: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-2: 0 4px 12px rgba(0,0,0,0.35), 0 2px 6px rgba(0,0,0,0.25);
+  --shadow-3: 0 8px 28px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.30);
+  --shadow-glow-emerald: 0 0 24px rgba(52,211,153,0.08);
+  --shadow-glow-amber:   0 0 24px rgba(251,191,36,0.08);
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-fast:   150ms var(--ease-spring);
+  --transition-normal: 220ms var(--ease-spring);
+  --transition-slow:   350ms var(--ease-spring);
+}
+
+/* ─── Reset & Base ──────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Minimal transition only for color/opacity — never position/transform globally */
+* {
+  transition-property: color, background-color, border-color, opacity, box-shadow;
+  transition-duration: var(--transition-fast);
+  transition-timing-function: var(--ease-spring);
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────── */
+.min-h-screen h1 {
+  letter-spacing: -0.03em;
+  font-feature-settings: "cv01", "cv02", "cv09";
+}
+.min-h-screen h2 { letter-spacing: -0.02em; }
+.min-h-screen h3 { letter-spacing: -0.01em; }
+
+/* ─── Shadows (map Tailwind classes to our system) ───────────────────── */
+.shadow-sm  { box-shadow: var(--shadow-1) !important; }
+.shadow     { box-shadow: var(--shadow-2) !important; }
+.shadow-md  { box-shadow: var(--shadow-2) !important; }
+.shadow-lg  { box-shadow: var(--shadow-2) !important; }
+.shadow-xl  { box-shadow: var(--shadow-3) !important; }
+.shadow-2xl { box-shadow: var(--shadow-3) !important; }
+
+/* ─── Border radius normalization ───────────────────────────────────── */
+/* Map all large radii to our card token */
+.rounded-3xl { border-radius: var(--radius-card) !important; }
+.rounded-2xl { border-radius: var(--radius-card) !important; }
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* ─── Card elevation system ─────────────────────────────────────────── */
+/* Level 0 — base card */
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle) !important;
+  box-shadow: var(--shadow-2);
+  border-radius: var(--radius-card) !important;
+  transition-property: box-shadow, border-color, transform;
+  transition-duration: var(--transition-normal);
+}
+
+/* Subtle lift on hover — gives the whole app a more "alive", production feel */
+.card:hover {
+  border-color: var(--border-muted) !important;
+  box-shadow: var(--shadow-3);
+}
+
+/* Level 1 — elevated card (for inner sections) */
+.card-inner {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-inner);
+  transition-property: background-color, border-color;
+  transition-duration: var(--transition-normal);
+}
+
+.card-inner:hover {
+  background: rgba(255,255,255,0.04);
+}
+
+/* Level 2 — hero / featured card */
+.card-hero {
+  background: linear-gradient(145deg, rgba(52,211,153,0.05) 0%, rgba(12,22,40,0.95) 60%);
+  border: 1px solid var(--accent-emerald-border) !important;
+  box-shadow: var(--shadow-3), var(--shadow-glow-emerald);
+  border-radius: var(--radius-card) !important;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────────────── */
+button {
+  border-radius: var(--radius-pill);
+  transition-property: background-color, border-color, color, box-shadow, transform, opacity;
+  transition-duration: var(--transition-fast);
+  transition-timing-function: var(--ease-spring);
+}
+
+button:hover:not(:disabled) { opacity: 0.92; }
+button:active:not(:disabled) { transform: scale(0.985); opacity: 0.85; }
+
+/* Remove global hover lift from buttons — only primary CTA buttons get this */
+button:disabled,
+button[disabled] {
+  transform: none !important;
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Primary CTA button */
+.btn-primary {
+  background: linear-gradient(160deg, #10b981 0%, #059669 100%);
+  color: #fff !important;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 12px rgba(16,185,129,0.20), var(--shadow-1);
+  border: 1px solid rgba(52,211,153,0.25) !important;
+  transition-property: box-shadow, transform, opacity;
+  transition-duration: var(--transition-normal);
+}
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 4px 20px rgba(16,185,129,0.30), var(--shadow-2);
+  opacity: 1;
+}
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+/* ─── Focus ring ─────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid rgba(52,211,153,0.7);
+  outline-offset: 2px;
+  border-radius: var(--radius-badge);
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* ─── KPI / metric numbers ───────────────────────────────────────────── */
+.metric-value {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  letter-spacing: -0.03em;
+}
+
+/* ─── Section titles ─────────────────────────────────────────────────── */
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(148,163,184,0.7);   /* slate-400 at 70% */
+}
+
+/* ─── Badge tokens ───────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-badge);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+}
+
+/* ─── Timeline marker ────────────────────────────────────────────────── */
+.timeline-marker {
+  transition: background-color var(--transition-normal), transform var(--transition-normal);
+}
+
+/* ─── Empty state ────────────────────────────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  text-align: center;
+  border: 1.5px dashed rgba(255,255,255,0.07);
+  border-radius: var(--radius-inner);
+}
+
+/* ─── Input fields ───────────────────────────────────────────────────── */
+input[type="text"], textarea, select {
+  border-radius: var(--radius-pill) !important;
+  transition-property: border-color, box-shadow;
+  transition-duration: var(--transition-fast);
+}
+input[type="text"]:focus, textarea:focus {
+  box-shadow: 0 0 0 3px rgba(52,211,153,0.12);
+}
+
+/* ─── Drag & drop zone ───────────────────────────────────────────────── */
+.drop-zone-active {
+  background: rgba(52,211,153,0.04) !important;
+  border-color: rgba(52,211,153,0.4) !important;
+  box-shadow: 0 0 0 1px rgba(52,211,153,0.15), inset 0 0 40px rgba(52,211,153,0.03);
+}
+
+/* ─── Smooth page bg ─────────────────────────────────────────────────── */
+.min-h-screen {
+  background-color: var(--surface-0);
+}
+
+/* ─── Nav tab polish ─────────────────────────────────────────────────── */
+.nav-tab {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.01em;
+  transition-property: background-color, color, box-shadow;
+  transition-duration: var(--transition-fast);
+  white-space: nowrap;
+}
+.nav-tab:not(.nav-tab-active) {
+  color: rgba(148,163,184,0.75);
+}
+.nav-tab:not(.nav-tab-active):hover {
+  background: rgba(255,255,255,0.05);
+  color: #e2e8f0;
+  opacity: 1;
+}
+
+/* ─── Indeterminate loading bar ──────────────────────────────────────── */
+/* Thin animated progress bar shown while an async AI request is in flight,
+   giving a clearer sense of background activity than a button spinner alone. */
+.loading-bar {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.06);
+}
+.loading-bar-fill {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 40%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--accent-indigo), transparent);
+  animation: loading-bar-sweep 1.4s var(--ease-spring) infinite;
+}
+@keyframes loading-bar-sweep {
+  0%   { left: -40%; }
+  100% { left: 100%; }
+}
+
+/* ─── Voice input equalizer bars ─────────────────────────────────────── */
+/* Lightweight "listening" indicator used by Civic Copilot's mic input. */
+.voice-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+.voice-bar {
+  width: 2px;
+  height: 100%;
+  border-radius: 1px;
+  background: var(--accent-emerald);
+  transform-origin: bottom;
+  animation: voice-bar-pulse 0.9s ease-in-out infinite;
+}
+@keyframes voice-bar-pulse {
+  0%, 100% { transform: scaleY(0.3); opacity: 0.55; }
+  50%      { transform: scaleY(1); opacity: 1; }
+}
+
+/* ─── Voice processing dot ────────────────────────────────────────────── */
+/* Small amber pulse shown during the "processing speech" phase. */
+.voice-processing-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f59e0b;
+  animation: voice-processing-pulse 0.8s ease-in-out infinite;
+}
+@keyframes voice-processing-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(0.85); }
+  50%      { opacity: 1;   transform: scale(1.15); }
+}
+
+/* ─── Voice countdown ring ────────────────────────────────────────────── */
+/* Amber countdown badge (3 → 2 → 1) shown before auto-send. */
+.voice-countdown-ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(245, 158, 11, 0.6);
+  background: rgba(245, 158, 11, 0.1);
+}
+.voice-countdown-number {
+  font-size: 9px;
+  font-weight: 700;
+  color: #fbbf24;
+  line-height: 1;
+}
+
+/* ─── Mic button ring animations ──────────────────────────────────────── */
+/* Smooth, calmer pulse for the mic button in listening state. */
+.voice-mic-ring {
+  animation: voice-mic-ring-pulse 1.4s ease-in-out infinite;
+}
+@keyframes voice-mic-ring-pulse {
+  0%, 100% { opacity: 0.2; transform: scale(0.9); }
+  50%      { opacity: 0.7; transform: scale(1.2); }
+}
+
+/* Slower amber ring during countdown state. */
+.voice-mic-ring-slow {
+  animation: voice-mic-ring-pulse-slow 2s ease-in-out infinite;
+}
+@keyframes voice-mic-ring-pulse-slow {
+  0%, 100% { opacity: 0.1; transform: scale(0.95); }
+  50%      { opacity: 0.5; transform: scale(1.15); }
+}
+
+/* ─── Reduced motion ──────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .voice-bar,
+  .voice-processing-dot,
+  .voice-mic-ring,
+  .voice-mic-ring-slow,
+  .loading-bar-fill {
+    animation: none !important;
+  }
+  .card:hover {
+    box-shadow: var(--shadow-2);
+  }
+}
+
