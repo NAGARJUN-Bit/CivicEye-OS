@@ -48,48 +48,74 @@ The platform can:
 
 ## Citizen Portal
 
-- Upload image/video evidence
-- AI issue detection
-- GPS metadata support
-- Complaint generation
-- Resolution tracking
+- Upload image/video evidence (JPG, PNG, WEBP, MP4, MOV, WEBM)
+- AI issue detection via Google Gemini Vision
+- Multilingual voice input for the Civic Copilot (English, Hindi, Tamil, Telugu, Kannada, Malayalam)
+- GPS metadata support with automatic fallback
+- Official complaint PDF generation
+- Real-time resolution tracking
 
 ## AI Analytics
 
-- Weekly trends
-- Monthly trends
-- Infrastructure health
-- Department forecasts
-- Seasonal predictions
-- High-risk zones
-- Maintenance recommendations
+- Weekly and monthly reporting trends
+- Infrastructure health scoring
+- Department workload forecasts
+- Seasonal issue predictions
+- High-risk zone identification
+- Preventive maintenance recommendations
 
 ## Government Dashboard
 
-- Complaint queue
-- Assignment workflow
-- Verification
-- Resolution timeline
-- Audit trail
+- Complaint queue with priority scoring
+- Accept / reject / assign officer workflow
+- Repair scheduling
+- Full audit trail
 
-## Admin Dashboard
+## Admin Intelligence Dashboard
 
-- City health metrics
-- Department performance
-- AI recommendations
-- Infrastructure analytics
-- Community participation
+- City health KPIs
+- Department efficiency metrics
+- AI-generated operational recommendations (powered by Anthropic Claude)
+- Hotspot clustering engine
 
 ---
 
 # Technology Stack
 
-- React
-- TypeScript
-- Vite
-- TailwindCSS
-- Node.js
-- Google Gemini API
+- React 19 + TypeScript
+- Vite 6
+- TailwindCSS 4
+- Node.js + Express
+- Google Gemini 2.5 Flash — image/video analysis, Civic Copilot, analytics
+- Anthropic Claude Sonnet — Admin Intelligence recommendations
+- Web Speech API — multilingual voice input
+
+---
+
+# Prerequisites
+
+## Node.js
+
+Node.js 18+ is required.
+
+## ffmpeg (required for video upload support)
+
+Video analysis uses `ffprobe` and `ffmpeg` to extract representative frames before sending them to Gemini Vision. These must be installed as system binaries.
+
+**macOS:**
+```bash
+brew install ffmpeg
+```
+
+**Ubuntu / Debian:**
+```bash
+sudo apt-get install ffmpeg
+```
+
+**Windows:**
+Download from https://ffmpeg.org/download.html and add to your PATH.
+
+> If ffmpeg is not installed, the server will still run but video uploads will return an error. Image uploads are unaffected.
 
 ---
 
@@ -97,37 +123,16 @@ The platform can:
 
 ```
 src/
- components/
- dashboard/
- context/
- lib/
+  components/
+    dashboard/          # All view components
+  context/              # React context (IssueProvider)
+  hooks/                # useSpeechRecognition
+  lib/                  # Shared types and utilities
 
-server.ts
-package.json
+server.ts               # Express + Gemini API routes
+videoFrames.ts          # ffmpeg frame extraction for video analysis
+geminiRetry.ts          # Retry logic for Gemini API calls
 ```
-
----
-
-# AI Usage
-
-Google Gemini is used for:
-
-- Issue understanding
-- Complaint generation
-- Analytics summaries
-- Infrastructure recommendations
-- Forecast generation
-
----
-
-# Future Improvements
-
-- Real GIS integration
-- IoT sensor support
-- Mobile application
-- Predictive maintenance models
-- Multi-city deployment
-- Government API integration
 
 ---
 
@@ -135,18 +140,74 @@ Google Gemini is used for:
 
 ```bash
 npm install
+```
+
+Copy the example environment file and fill in your API keys:
+
+```bash
+cp .env.example .env
+```
+
+Then start the development server:
+
+```bash
 npm run dev
 ```
+
+The app will be available at http://localhost:3000
 
 ---
 
 # Environment Variables
 
-Create a `.env` file.
+Create a `.env` file in the project root (see `.env.example`):
 
+```env
+# Required — Google Gemini API key for AI analysis, Copilot, and Analytics
+CUSTOM_GEMINI_API_KEY=your_gemini_api_key_here
+
+# Required for Admin Intelligence AI Recommendations tab
+# Get one at https://console.anthropic.com
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
 ```
-CUSTOM_GEMINI_API_KEY=YOUR_API_KEY
+
+> **Note:** Without `ANTHROPIC_API_KEY`, all other features work normally. Only the "Generate AI Recommendations" button in the Admin Intelligence tab will be unavailable.
+
+---
+
+# Production Build
+
+```bash
+npm run build
+npm start
 ```
+
+---
+
+# AI Usage
+
+**Google Gemini 2.5 Flash** is used for:
+
+- Civic issue classification from images and videos
+- Official complaint document generation
+- Civic Copilot conversational assistant
+- AI Analytics Center summaries and forecasts
+- Infrastructure health assessments
+
+**Anthropic Claude Sonnet** is used for:
+
+- Admin Intelligence operational recommendations
+
+---
+
+# Future Improvements
+
+- Real GIS / map tile integration
+- IoT sensor data ingestion
+- Mobile application (React Native)
+- Predictive maintenance ML models
+- Multi-city deployment with tenant isolation
+- Government API integration (RTI portals)
 
 ---
 

@@ -85,6 +85,7 @@ export default function App() {
   const [govEntries, setGovEntries] = useState<GovernmentEntry[]>([]);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
 
   const clearSelectedFile = () => {
     if (previewUrl && previewUrl.startsWith('blob:')) {
@@ -113,6 +114,11 @@ export default function App() {
     { id: '1', role: 'assistant', text: 'Hello! I am your Civic Copilot. Ask me anything about local infrastructure, pending reports, or neighborhood trends.' }
   ]);
   const [isChatTyping, setIsChatTyping] = useState(false);
+
+  // Auto-scroll chat to the latest message whenever history or typing indicator changes
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chatHistory, isChatTyping]);
 
   // --- DERIVED STATE & METRICS ---
   const userPoints = (userStats.reports * 10) + (userStats.verifications * 5) + (userStats.resolvedConfirmed * 15);
@@ -210,7 +216,6 @@ export default function App() {
   };
 
   const handleMarkFixed = (id: string) => {
-    // This function's logic might need to be updated based on new timeline/status requirements
     setIssues(prev => prev.map(issue => {
       if (issue.id === id) {
         return { ...issue, status: 'resolved' };
@@ -526,7 +531,7 @@ export default function App() {
       setChatHistory(prev => [...prev, { 
         id: (Date.now() + 1).toString(), 
         role: 'assistant', 
-        text: `GEMINI ANALYSIS FAILED` 
+        text: `Sorry, I couldn't reach the civic data service right now. Please check your connection and try again.` 
       }]);
     } finally {
       setIsChatTyping(false);
@@ -1183,6 +1188,7 @@ export default function App() {
                   <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce" style={{animationDelay:'300ms'}} />
                 </div>
               )}
+              <div ref={chatEndRef} />
             </div>
 
             {/* Voice status bar — shown whenever the mic is active */}
