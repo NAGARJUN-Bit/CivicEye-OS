@@ -1,222 +1,422 @@
 # 🚀 CivicEye OS
 
-> AI-powered civic issue detection and intelligent complaint resolution platform built for Vibe2Ship Hackathon 2026.
+<p align="center">
+AI-powered civic issue detection and intelligent complaint resolution platform built for the Vibe2Ship Hackathon 2026.
+</p>
+
+<p align="center">
+
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)
+![Node.js](https://img.shields.io/badge/Node.js-20-339933?logo=node.js)
+![Google Gemini](https://img.shields.io/badge/Google-Gemini%202.5%20Flash-4285F4)
+![Cloud Run](https://img.shields.io/badge/Google%20Cloud-Cloud%20Run-4285F4?logo=googlecloud)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+</p>
 
 ---
 
-# Overview
+# 🌐 Live Demo
 
-CivicEye OS is an AI-driven platform that helps citizens report civic infrastructure issues using images or videos while automatically classifying complaints, assessing severity, recommending responsible departments, and providing an intelligent workflow for government authorities.
+**Application**
 
-Instead of manually filing complaints and waiting for action, CivicEye OS uses AI to streamline the entire lifecycle—from citizen reporting to government resolution.
-
----
-
-# Problem Statement
-
-Municipal complaints are often:
-
-- difficult to report
-- manually categorized
-- delayed in routing
-- lacking transparency
-- hard to monitor
-
-Citizens rarely know whether their complaint has been verified or resolved.
-
-Government departments also lack intelligent prioritization for incoming complaints.
+https://civiceye-os-563427267126.asia-south1.run.app
 
 ---
 
-# Solution
+# 📂 GitHub Repository
 
-CivicEye OS automates the complaint lifecycle using AI.
+https://github.com/NAGARJUN-Bit/CivicEye-OS
 
-The platform can:
+---
 
-- Detect civic issues from uploaded media
+# 📖 Overview
+
+CivicEye OS is an AI-powered civic infrastructure platform that enables citizens to report civic issues using images or videos while automatically analyzing, classifying, prioritizing, and routing complaints to the appropriate government department.
+
+Instead of relying on manual complaint filing, CivicEye OS leverages Google Gemini to understand visual evidence, generate structured reports, estimate severity, recommend departments, and assist both citizens and administrators throughout the complaint lifecycle.
+
+---
+
+# 🎯 Problem Statement
+
+Municipal complaint systems today face several challenges:
+
+- Manual complaint categorization
+- Slow routing to departments
+- Lack of transparency
+- Poor prioritization
+- Limited citizen engagement
+- No AI-assisted verification
+
+These inefficiencies often delay issue resolution and reduce public trust.
+
+---
+
+# 💡 Solution
+
+CivicEye OS automates the entire complaint lifecycle using AI.
+
+The platform allows citizens to:
+
+- Upload images or videos of civic issues
+- Automatically analyze media using Google Gemini
 - Generate structured complaint reports
-- Classify issue severity
-- Recommend responsible departments
-- Predict maintenance requirements
-- Track issue resolution
-- Provide analytics dashboards for administrators
+- Identify responsible government departments
+- Estimate severity and resolution time
+- Track issue progress
+- Interact with an AI Civic Copilot
+
+Government administrators receive intelligent dashboards with analytics, hotspot detection, workload monitoring, and AI-generated operational insights.
 
 ---
 
-# Features
+# ✨ Key Features
 
-## Citizen Portal
+## 👤 Citizen Reporting Hub
 
-- Upload image/video evidence (JPG, PNG, WEBP, MP4, MOV, WEBM)
-- AI issue detection via Google Gemini Vision
-- Multilingual voice input for the Civic Copilot (English, Hindi, Tamil, Telugu, Kannada, Malayalam)
-- GPS metadata support with automatic fallback
-- Official complaint PDF generation
-- Real-time resolution tracking
-
-## AI Analytics
-
-- Weekly and monthly reporting trends
-- Infrastructure health scoring
-- Department workload forecasts
-- Seasonal issue predictions
-- High-risk zone identification
-- Preventive maintenance recommendations
-
-## Government Dashboard
-
-- Complaint queue with priority scoring
-- Accept / reject / assign officer workflow
-- Repair scheduling
-- Full audit trail
-
-## Admin Intelligence Dashboard
-
-- City health KPIs
-- Department efficiency metrics
-- AI-generated operational recommendations (powered by Anthropic Claude)
-- Hotspot clustering engine
+- Upload Images
+- Upload Videos
+- Automatic GPS Capture
+- AI-powered Media Analysis
+- Smart Complaint Generation
+- Resolution Tracking
 
 ---
 
-# Technology Stack
+## 🤖 Google Gemini Vision
 
-- React 19 + TypeScript
-- Vite 6
-- TailwindCSS 4
-- Node.js + Express
-- Google Gemini 2.5 Flash — image/video analysis, Civic Copilot, analytics
-- Anthropic Claude Sonnet — Admin Intelligence recommendations
-- Web Speech API — multilingual voice input
+Supports:
+
+- Road Damage Detection
+- Water Logging
+- Drainage Issues
+- Garbage Dumps
+- Electrical Hazards
+- Infrastructure Damage
+- Public Safety Risks
+
+Gemini automatically generates:
+
+- Issue Classification
+- Severity Score
+- Department Assignment
+- Estimated Resolution Time
+- Risk Assessment
+- Official Complaint Draft
 
 ---
 
-# Prerequisites
+## 🎥 Video Intelligence
 
-## Node.js
+Video uploads are processed using FFmpeg.
 
-Node.js 18+ is required.
+The system:
 
-## ffmpeg (required for video upload support)
+- Extracts representative frames
+- Sends them to Gemini Vision
+- Aggregates results
+- Generates a unified incident report
 
-Video analysis uses `ffprobe` and `ffmpeg` to extract representative frames before sending them to Gemini Vision. These must be installed as system binaries.
+Supported formats:
 
-**macOS:**
-```bash
-brew install ffmpeg
+- MP4
+- MOV
+- WEBM
+
+---
+
+## 🧠 Civic Copilot
+
+AI-powered assistant capable of answering questions related to:
+
+- Civic infrastructure
+- Complaint status
+- Department information
+- Neighborhood issues
+- Public services
+
+Supports multilingual voice input using the Web Speech API.
+
+---
+
+## 📊 Analytics Dashboard
+
+Provides:
+
+- City Health Score
+- Department Performance
+- Resolution Metrics
+- Infrastructure Trends
+- Seasonal Predictions
+- High-Risk Zones
+- Preventive Maintenance Insights
+
+---
+
+## 🏛 Government Dashboard
+
+Designed for authorities to:
+
+- Review complaints
+- Verify reports
+- Track progress
+- Manage departments
+- Monitor KPIs
+- Improve operational efficiency
+
+---
+
+# 🏗 System Workflow
+
+```
+Citizen Upload
+       │
+       ▼
+Image / Video
+       │
+       ▼
+Google Gemini Vision
+       │
+       ▼
+Issue Classification
+       │
+       ▼
+Severity Analysis
+       │
+       ▼
+Department Assignment
+       │
+       ▼
+Complaint Generation
+       │
+       ▼
+Government Dashboard
+       │
+       ▼
+Verification & Resolution
 ```
 
-**Ubuntu / Debian:**
-```bash
-sudo apt-get install ffmpeg
-```
+---
 
-**Windows:**
-Download from https://ffmpeg.org/download.html and add to your PATH.
+# 🛠 Technology Stack
 
-> If ffmpeg is not installed, the server will still run but video uploads will return an error. Image uploads are unaffected.
+### Frontend
+
+- React 19
+- TypeScript
+- Vite
+- TailwindCSS
+
+### Backend
+
+- Node.js
+- Express
+
+### Artificial Intelligence
+
+- Google Gemini 2.5 Flash
+- Anthropic Claude Sonnet (Admin Intelligence)
+
+### Video Processing
+
+- FFmpeg
+- FFprobe
+
+### Deployment
+
+- Google Cloud Run
+- Docker
 
 ---
 
-# Project Structure
+# ☁ Google Technologies Used
+
+- Google Gemini 2.5 Flash API
+- Google AI Studio
+- Google Cloud Run
+- Google Cloud Build
+- Docker Containers
+
+---
+
+# 📁 Project Structure
 
 ```
 src/
-  components/
-    dashboard/          # All view components
-  context/              # React context (IssueProvider)
-  hooks/                # useSpeechRecognition
-  lib/                  # Shared types and utilities
+ ├── components/
+ ├── context/
+ ├── hooks/
+ ├── lib/
 
-server.ts               # Express + Gemini API routes
-videoFrames.ts          # ffmpeg frame extraction for video analysis
-geminiRetry.ts          # Retry logic for Gemini API calls
+server.ts
+videoFrames.ts
+geminiRetry.ts
+Dockerfile
 ```
 
 ---
 
-# Installation
+# ⚙ Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/NAGARJUN-Bit/CivicEye-OS.git
+```
+
+Navigate into the project
+
+```bash
+cd CivicEye-OS
+```
+
+Install dependencies
 
 ```bash
 npm install
 ```
 
-Copy the example environment file and fill in your API keys:
+Create an environment file
 
 ```bash
 cp .env.example .env
 ```
 
-Then start the development server:
+Add your API keys
+
+```env
+CUSTOM_GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+
+ANTHROPIC_API_KEY=YOUR_ANTHROPIC_KEY
+```
+
+Run locally
 
 ```bash
 npm run dev
 ```
 
-The app will be available at http://localhost:3000
-
----
-
-# Environment Variables
-
-Create a `.env` file in the project root (see `.env.example`):
-
-```env
-# Required — Google Gemini API key for AI analysis, Copilot, and Analytics
-CUSTOM_GEMINI_API_KEY=your_gemini_api_key_here
-
-# Required for Admin Intelligence AI Recommendations tab
-# Get one at https://console.anthropic.com
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
-```
-
-> **Note:** Without `ANTHROPIC_API_KEY`, all other features work normally. Only the "Generate AI Recommendations" button in the Admin Intelligence tab will be unavailable.
-
----
-
-# Production Build
+Build production
 
 ```bash
 npm run build
+```
+
+Start server
+
+```bash
 npm start
 ```
 
 ---
 
-# AI Usage
+# 🐳 Docker
 
-**Google Gemini 2.5 Flash** is used for:
+Build
 
-- Civic issue classification from images and videos
-- Official complaint document generation
-- Civic Copilot conversational assistant
-- AI Analytics Center summaries and forecasts
-- Infrastructure health assessments
+```bash
+docker build -t civiceye-os .
+```
 
-**Anthropic Claude Sonnet** is used for:
+Run
 
-- Admin Intelligence operational recommendations
-
----
-
-# Future Improvements
-
-- Real GIS / map tile integration
-- IoT sensor data ingestion
-- Mobile application (React Native)
-- Predictive maintenance ML models
-- Multi-city deployment with tenant isolation
-- Government API integration (RTI portals)
+```bash
+docker run -p 8080:8080 civiceye-os
+```
 
 ---
 
-# Team
+# 📷 Supported Media
+
+### Images
+
+- JPG
+- JPEG
+- PNG
+- WEBP
+
+### Videos
+
+- MP4
+- MOV
+- WEBM
+
+---
+
+# 🔒 Environment Variables
+
+Required
+
+```env
+CUSTOM_GEMINI_API_KEY=
+```
+
+Optional
+
+```env
+ANTHROPIC_API_KEY=
+```
+
+---
+
+# 🚀 Deployment
+
+The application is deployed on **Google Cloud Run** using Docker containers.
+
+Production URL:
+
+https://civiceye-os-563427267126.asia-south1.run.app
+
+---
+
+# 🔮 Future Improvements
+
+- Live GIS Map Integration
+- IoT Sensor Support
+- Mobile Application
+- Government API Integration
+- Predictive Maintenance Models
+- Real-Time Officer Dispatch
+- Smart Notifications
+- Multi-City Deployment
+
+---
+
+# 👨‍💻 Developer
+
+**Nagarjun N**
 
 Built for **Vibe2Ship Hackathon 2026**
 
+GitHub:
+
+https://github.com/NAGARJUN-Bit
+
 ---
 
-# License
+# 📜 License
 
-MIT
+This project is released under the MIT License.
+
+---
+
+## ⭐ Acknowledgements
+
+Special thanks to:
+
+- Google AI Studio
+- Google Cloud
+- Gemini API
+- Vibe2Ship Hackathon
+- React Community
+- Node.js Community
+
+---
+
+<p align="center">
+
+Made with ❤️ using Google Gemini, React, TypeScript and Google Cloud.
+
+</p>
